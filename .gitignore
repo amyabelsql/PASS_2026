@@ -427,3 +427,7 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+# Demo artifacts
+test-results/*.txt
+!test-results/.gitkeep

@@ -1,0 +1,99 @@
+name: Database Pull Request Tests
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "database/**"
+      - "tests/**"
+      - "scripts/**"
+      - ".github/workflows/database-pr-tests.yml"
+
+jobs:
+  database-tests:
+    name: Run SQL validation tests
+    runs-on: ubuntu-latest
+
+    services:
+      sqlserver:
+        image: mcr.microsoft.com/mssql/server:2022-latest
+        env:
+          ACCEPT_EULA: Y
+          MSSQL_SA_PASSWORD: REMOVED-PASSWORD
+        ports:
+          - 1433:1433
+        options: >-
+          --health-cmd "bash -c '</dev/tcp/localhost/1433'"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install sqlcmd
+        shell: bash
+        run: |
+          set -euo pipefail
+          if command -v sqlcmd >/dev/null 2>&1; then
+            echo "sqlcmd already installed."
+            exit 0
+          fi
+          curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
+          curl -sSL https://packages.microsoft.com/config/ubuntu/22.04/prod.list | sudo tee /etc/apt/sources.list.d/microsoft-prod.list >/dev/null
+          sudo apt-get update
+          sudo ACCEPT_EULA=Y apt-get install -y mssql-tools18 unixodbc-dev
+          echo "/opt/mssql-tools18/bin" >> "${GITHUB_PATH}"
+
+      - name: Make scripts executable
+        run: chmod +x scripts/wait-for-sqlserver.sh scripts/run-tests.sh
+
+      - name: Wait for SQL Server
+        env:
+          SQL_SERVER: localhost
+          SQL_PORT: 1433
+          SQL_USER: sa
+          SQL_PASSWORD: REMOVED-PASSWORD
+        run: ./scripts/wait-for-sqlserver.sh
+
+      - name: Run database tests (good change)
+        env:
+          SQL_SERVER: localhost
+          SQL_PORT: 1433
+          SQL_USER: sa
+          SQL_PASSWORD: REMOVED-PASSWORD
+        run: ./scripts/run-tests.sh
+
+      - name: Upload test results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: database-test-results
+          path: test-results/
+          if-no-files-found: warn
+
+  # Optional demo job: intentionally run the bad AI-generated change
+  # Uncomment this job when you want to show CI failing on a bad change.
+  #
+  # database-tests-bad-change:
+  #   name: Run SQL validation tests (bad change)
+  #   runs-on: ubuntu-latest
+  #   services:
+  #     sqlserver:
+  #       image: mcr.microsoft.com/mssql/server:2022-latest
+  #       env:
+  #         ACCEPT_EULA: Y
+  #         MSSQL_SA_PASSWORD: REMOVED-PASSWORD
+  #       ports:
+  #         - 1433:1433
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - run: chmod +x scripts/wait-for-sqlserver.sh scripts/run-tests.sh
+  #     - env:
+  #         SQL_PASSWORD: REMOVED-PASSWORD
+  #       run: ./scripts/wait-for-sqlserver.sh
+  #     - env:
+  #         SQL_PASSWORD: REMOVED-PASSWORD
+  #       run: CHANGE_SCRIPT=database/changes/004_ai_generated_bad_change.sql ./scripts/run-tests.sh
