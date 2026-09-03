@@ -1,143 +1,62 @@
 # Trust but Verify: Testing AI-Generated SQL
 
-Step-by-step lab for a PASS Summit webinar. This repo shows how to test SQL changes before merge using Docker, shell scripts, pre-commit hooks, and GitHub Actions.
+This repo is organized to be easy to follow in order.
 
-## Lab flow
+Start with the markdown guides in [`00_Guides/`](00_Guides/README.md), then move through setup, database files, tests, and the run script.
 
-1. Start SQL Server in Docker.
-2. Run the baseline database setup.
-3. Apply the good AI-generated change.
-4. Re-run the same flow with the bad AI-generated change.
-5. Open a pull request and watch GitHub Actions run the same checks.
+| Part | Focus | Start here |
+| --- | --- | --- |
+| 0 | Start here | [`00_Guides/README.md`](00_Guides/README.md) |
+| 1 | Automatically testing AI-generated database changes | [`00_Guides/01_Automatic-AI-Validation.md`](00_Guides/01_Automatic-AI-Validation.md) |
+| 2 | What happens when secrets get committed, why that is dangerous, and how to reproduce it safely | [`00_Guides/02_Secret-Leak-Impact.md`](00_Guides/02_Secret-Leak-Impact.md) |
+| 3 | Preventing password and secret leaks | [`00_Guides/03_Secret-Prevention.md`](00_Guides/03_Secret-Prevention.md) |
 
-## What’s in this repo
+## Repo layout
 
-```text
-database/      schema, seed, stored proc, good/bad change scripts
-tests/         before.sql, after.sql, validate.sql
-scripts/       wait-for-sqlserver.sh, run-tests.sh
-test-results/  output logs from each run
-.github/       PR workflow for database tests
-```
+- `00_Guides/` — reader-facing markdown walkthroughs
+- `01_Docker/` — Docker and SQL Server setup scripts
+- `02_Database/` — schema, seed data, stored procedure, and AI change scripts
+- `03_Tests/` — before/after/validation SQL checks
+- `04_Run/` — main script to run the SQL validation flow
+- `.github/workflows/` — pull request and secret scanning automation
 
 ## Prerequisites
 
-- IntelliJ
 - Docker Desktop
 - Git
 - GitHub account
 - GitHub Copilot plugin
-- Optional: pre-commit
+- `pre-commit`
 - `sqlcmd`
 
-## SQL Server settings
+## One-time setup
 
-This demo uses:
+1. Copy `.env.example` to `.env`
+2. Set a strong local SQL password in `SA_PASSWORD`
+3. Add the repository secret `SQL_SA_PASSWORD` in GitHub Actions
+4. Install local hooks with `pre-commit install`
 
-- `ACCEPT_EULA=Y`
-- `MSSQL_SA_PASSWORD=REMOVED-PASSWORD`
-- SQL Server 2022 Docker image
-- `GitDemoDb`
+Example local `.env` values:
 
-## Step 1. Start SQL Server
-
-From the repo root:
-
-```bash
-docker rm -f pass2026-sql >/dev/null 2>&1 || true
-docker run -d \
-  --name pass2026-sql \
-  -e ACCEPT_EULA=Y \
-  -e MSSQL_SA_PASSWORD=REMOVED-PASSWORD \
-  -p 1433:1433 \
-  mcr.microsoft.com/mssql/server:2022-latest
+```dotenv
+SA_PASSWORD=replace-with-a-strong-local-password
+SQL_PASSWORD=replace-with-a-strong-local-password
+SQL_SERVER=localhost
+SQL_PORT=1433
+SQL_USER=sa
+DB_NAME=GitDemoDb
 ```
 
-## Step 2. Run the lab
+## Quick start
 
-Make scripts executable once:
+1. Start SQL Server
+   - macOS: `bash 01_Docker/Mac/03-Start-SQL-Server.sh`
+   - Windows: `pwsh -File 01_Docker/Windows/02-Start-Docker.ps1`
+2. Wait for SQL Server: `bash 01_Docker/01_wait-for-sqlserver.sh`
+3. Run the validation flow: `./04_Run/run-tests.sh`
 
-```bash
-chmod +x scripts/wait-for-sqlserver.sh scripts/run-tests.sh
-```
-
-Run the default flow:
-
-```bash
-./scripts/run-tests.sh
-```
-
-This:
-
-1. Waits for SQL Server
-2. Recreates `GitDemoDb`
-3. Applies schema
-4. Applies seed data
-5. Creates `dbo.usp_GetCustomerOrders`
-6. Runs `tests/before.sql`
-7. Applies the selected change
-8. Runs `tests/after.sql`
-9. Runs `tests/validate.sql`
-
-## Step 3. Run the good change
-
-The good change is the default:
+To demonstrate a failing AI-generated change:
 
 ```bash
-./scripts/run-tests.sh
+CHANGE_SCRIPT=02_Database/changes/004_ai_generated_bad_change.sql ./04_Run/run-tests.sh
 ```
-
-It uses:
-
-`database/changes/004_ai_generated_good_change.sql`
-
-Expected result: the run succeeds and logs are written to `test-results/`.
-
-## Step 4. Run the bad change
-
-```bash
-CHANGE_SCRIPT=database/changes/004_ai_generated_bad_change.sql ./scripts/run-tests.sh
-```
-
-Expected result: the script fails because the procedure references a column that does not exist.
-
-## Step 5. Run pre-commit hooks
-
-```bash
-pip install pre-commit
-pre-commit install
-pre-commit run --all-files
-```
-
-## Step 6. Push to GitHub
-
-```bash
-git add .
-git commit -m "Add PASS webinar SQL validation demo"
-git push origin <your-branch>
-```
-
-## Step 7. Open a pull request
-
-1. Open a PR to `main`.
-2. Watch **Database Pull Request Tests** start.
-3. Review the uploaded `database-test-results` artifact.
-4. Compare `before-results.txt`, `after-results.txt`, and `validation-results.txt`.
-
-## How to explain the demo
-
-- AI writes the first draft.
-- Tests prove whether the draft is safe.
-- Good SQL passes.
-- Bad SQL fails before merge.
-- Artifacts keep the proof.
-
-## Windows notes
-
-- Use **Git Bash** or **WSL**.
-- Keep `.sh` files with LF line endings.
-- Make sure Docker Desktop is running.
-
-## Troubleshooting
-
-See `TROUBLESHOOTING.md`.

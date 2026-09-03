@@ -1,0 +1,43 @@
+# Local SQL Server dev environment — single source of truth for
+# container name, SA credentials, database, and ports.
+#
+# Override any value on the command line, e.g.:
+#   make start CONTAINER=myserver SA_PASSWORD='set-a-strong-password'
+# Or store SA_PASSWORD in .env (see .env.example).
+CONTAINER   ?= pass-test
+PORT        ?= 1433
+SA_USERNAME ?= sa
+SA_PASSWORD ?=
+DB_NAME     ?= AdventureWorks2022
+IMAGE       ?= mcr.microsoft.com/mssql/server:2022-latest
+APP_PORT    ?= 8080
+
+export CONTAINER PORT SA_USERNAME SA_PASSWORD DB_NAME IMAGE APP_PORT
+
+DOCKER_DIR := 01_Docker/Mac
+
+.PHONY: check install start setup dev test stop remove
+
+check:
+	bash $(DOCKER_DIR)/01-Check-Prerequisites.sh
+
+install:
+	bash $(DOCKER_DIR)/01-Install-Docker.sh
+
+start:
+	bash $(DOCKER_DIR)/02-Start-Docker.sh
+
+setup:
+	bash $(DOCKER_DIR)/03-Start-SQL-Server.sh
+
+dev:
+	bash $(DOCKER_DIR)/03-Dev-Environment.sh
+
+test:
+	bash $(DOCKER_DIR)/04-Test-Docker.sh
+
+stop:
+	bash $(DOCKER_DIR)/05-Cleanup.sh
+
+remove:
+	bash $(DOCKER_DIR)/06-Remove-Docker.sh

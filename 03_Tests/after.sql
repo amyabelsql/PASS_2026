@@ -1,5 +1,5 @@
 -- after.sql
--- Captures procedure behavior after applying selected AI-generated change.
+-- Captures procedure behavior after the selected change.
 
 SET NOCOUNT ON;
 

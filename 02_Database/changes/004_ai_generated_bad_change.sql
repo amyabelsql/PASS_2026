@@ -1,6 +1,5 @@
--- 004_ai_generated_good_change.sql
--- Simulates an AI-generated change that is valid and useful.
--- Enhancement: include CustomerName in the output.
+-- 004_ai_generated_bad_change.sql
+-- Intentional AI mistake: references a column that does not exist.
 
 SET ANSI_NULLS ON;
 SET QUOTED_IDENTIFIER ON;
@@ -15,13 +14,11 @@ BEGIN
     SELECT
         o.OrderID,
         o.CustomerID,
-        c.CustomerName,
+        o.AI_Made_Up_Column,
         o.OrderDate,
         o.OrderTotal,
         o.OrderStatus
     FROM dbo.Orders AS o
-    INNER JOIN dbo.Customers AS c
-        ON c.CustomerID = o.CustomerID
     WHERE o.CustomerID = @CustomerID
     ORDER BY o.OrderDate DESC, o.OrderID DESC;
 END;

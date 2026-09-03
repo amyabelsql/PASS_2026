@@ -5,22 +5,25 @@ on:
     branches:
       - main
     paths:
-      - "database/**"
-      - "tests/**"
-      - "scripts/**"
+      - "01_Docker/**"
+      - "02_Database/**"
+      - "03_Tests/**"
+      - "04_Run/**"
       - ".github/workflows/database-pr-tests.yml"
 
 jobs:
   database-tests:
     name: Run SQL validation tests
     runs-on: ubuntu-latest
+    env:
+      SQL_SA_PASSWORD: ${{ secrets.SQL_SA_PASSWORD }}
 
     services:
       sqlserver:
         image: mcr.microsoft.com/mssql/server:2022-latest
         env:
           ACCEPT_EULA: Y
-          MSSQL_SA_PASSWORD: REMOVED-PASSWORD
+          MSSQL_SA_PASSWORD: ${{ secrets.SQL_SA_PASSWORD }}
         ports:
           - 1433:1433
         options: >-
@@ -31,7 +34,7 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Install sqlcmd
         shell: bash
@@ -48,23 +51,23 @@ jobs:
           echo "/opt/mssql-tools18/bin" >> "${GITHUB_PATH}"
 
       - name: Make scripts executable
-        run: chmod +x scripts/wait-for-sqlserver.sh scripts/run-tests.sh
+        run: chmod +x 01_Docker/*.sh 04_Run/*.sh
 
       - name: Wait for SQL Server
         env:
           SQL_SERVER: localhost
           SQL_PORT: 1433
           SQL_USER: sa
-          SQL_PASSWORD: REMOVED-PASSWORD
-        run: ./scripts/wait-for-sqlserver.sh
+          SQL_PASSWORD: ${{ env.SQL_SA_PASSWORD }}
+        run: ./01_Docker/01_wait-for-sqlserver.sh
 
       - name: Run database tests (good change)
         env:
           SQL_SERVER: localhost
           SQL_PORT: 1433
           SQL_USER: sa
-          SQL_PASSWORD: REMOVED-PASSWORD
-        run: ./scripts/run-tests.sh
+          SQL_PASSWORD: ${{ env.SQL_SA_PASSWORD }}
+        run: ./04_Run/run-tests.sh
 
       - name: Upload test results
         if: always()
@@ -85,15 +88,15 @@ jobs:
   #       image: mcr.microsoft.com/mssql/server:2022-latest
   #       env:
   #         ACCEPT_EULA: Y
-  #         MSSQL_SA_PASSWORD: REMOVED-PASSWORD
+  #         MSSQL_SA_PASSWORD: ${{ secrets.SQL_SA_PASSWORD }}
   #       ports:
   #         - 1433:1433
   #   steps:
-  #     - uses: actions/checkout@v4
-  #     - run: chmod +x scripts/wait-for-sqlserver.sh scripts/run-tests.sh
+  #     - uses: actions/checkout@v6
+  #     - run: chmod +x 01_Docker/*.sh 04_Run/*.sh
   #     - env:
-  #         SQL_PASSWORD: REMOVED-PASSWORD
-  #       run: ./scripts/wait-for-sqlserver.sh
+  #         SQL_PASSWORD: ${{ secrets.SQL_SA_PASSWORD }}
+  #       run: ./01_Docker/01_wait-for-sqlserver.sh
   #     - env:
-  #         SQL_PASSWORD: REMOVED-PASSWORD
-  #       run: CHANGE_SCRIPT=database/changes/004_ai_generated_bad_change.sql ./scripts/run-tests.sh
+  #         SQL_PASSWORD: ${{ secrets.SQL_SA_PASSWORD }}
+  #       run: CHANGE_SCRIPT=02_Database/changes/004_ai_generated_bad_change.sql ./04_Run/run-tests.sh

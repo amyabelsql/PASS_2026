@@ -3,7 +3,6 @@
 
 SET NOCOUNT ON;
 
--- Re-runnable setup for demo purposes.
 IF OBJECT_ID('dbo.Orders', 'U') IS NOT NULL
 BEGIN
     DROP TABLE dbo.Orders;

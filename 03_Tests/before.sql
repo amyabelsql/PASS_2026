@@ -1,5 +1,5 @@
 -- before.sql
--- Captures baseline procedure behavior before applying AI-generated change.
+-- Captures baseline procedure behavior before the change.
 
 SET NOCOUNT ON;
 
