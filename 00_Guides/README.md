@@ -7,6 +7,7 @@ This repo is meant to be followed in order.
 1. [`01_Automatic-AI-Validation.md`](01_Automatic-AI-Validation.md)
 2. [`02_Secret-Leak-Impact.md`](02_Secret-Leak-Impact.md)
 3. [`03_Secret-Prevention.md`](03_Secret-Prevention.md)
+4. [`../05_PASS_Summit_Demos/README.md`](../05_PASS_Summit_Demos/README.md)
 
 ## Repo order
 
@@ -15,6 +16,7 @@ This repo is meant to be followed in order.
 3. `02_Database/` — schema, seed data, stored procedure, and change scripts
 4. `03_Tests/` — SQL checks used before and after the AI-generated change
 5. `04_Run/` — script that runs the end-to-end validation demo
+6. `05_PASS_Summit_Demos/` — PASS Summit governance demos for DBAs
 
 ## Quick setup
 

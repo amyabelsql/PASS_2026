@@ -11,3 +11,10 @@ repos:
     rev: v8.30.1
     hooks:
       - id: gitleaks
+  - repo: local
+    hooks:
+      - id: dba-sql-guardrails
+        name: dba-sql-guardrails
+        entry: bash 05_PASS_Summit_Demos/scripts/sql_guardrails.sh
+        language: system
+        files: ^02_Database/changes/.*\.sql$

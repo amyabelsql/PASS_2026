@@ -1,0 +1,100 @@
+name: DBA Approval Guardrails
+
+on:
+  pull_request:
+    branches:
+      - main
+    types:
+      - opened
+      - synchronize
+      - reopened
+      - labeled
+      - unlabeled
+      - ready_for_review
+    paths:
+      - "02_Database/changes/**/*.sql"
+      - "05_PASS_Summit_Demos/scripts/sql_guardrails.sh"
+      - ".github/workflows/dba-approval-guardrails.yml"
+
+jobs:
+  sql-guardrails:
+    name: Validate SQL guardrails
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: read
+    outputs:
+      has_sql_changes: ${{ steps.changed.outputs.has_sql_changes }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - id: changed
+        name: Gather changed SQL files
+        shell: bash
+        run: |
+          set -euo pipefail
+          git fetch --no-tags --prune --depth=1 origin "${{ github.base_ref }}"
+          mapfile -t changed_sql < <(git diff --name-only --diff-filter=ACMR "origin/${{ github.base_ref }}...${{ github.sha }}" | grep -E '^02_Database/changes/.*\.sql$' || true)
+
+          if ((${#changed_sql[@]} == 0)); then
+            echo "has_sql_changes=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          printf '%s\0' "${changed_sql[@]}" > changed-sql-files.txt
+          echo "has_sql_changes=true" >> "$GITHUB_OUTPUT"
+
+      - name: Run SQL guardrail checks
+        if: steps.changed.outputs.has_sql_changes == 'true'
+        shell: bash
+        run: |
+          set -euo pipefail
+          xargs -0 bash 05_PASS_Summit_Demos/scripts/sql_guardrails.sh < changed-sql-files.txt
+
+  approval-policy:
+    name: Enforce DBA approval policy
+    needs: sql-guardrails
+    if: needs.sql-guardrails.outputs.has_sql_changes == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: read
+    steps:
+      - name: Require label and non-author approval
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const pr = context.payload.pull_request;
+            const labels = pr.labels.map((label) => label.name.toLowerCase());
+            if (!labels.includes("dba-approved")) {
+              core.setFailed('SQL change requests require the "dba-approved" label.');
+              return;
+            }
+
+            const reviews = await github.paginate(github.rest.pulls.listReviews, {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: pr.number,
+              per_page: 100,
+            });
+
+            const approvedBy = new Set();
+            for (const review of reviews) {
+              if (
+                review.state === "APPROVED" &&
+                review.user &&
+                review.user.login &&
+                review.user.login !== pr.user.login
+              ) {
+                approvedBy.add(review.user.login);
+              }
+            }
+
+            if (approvedBy.size === 0) {
+              core.setFailed("At least one non-author approval is required for SQL changes.");
+              return;
+            }
+
+            core.info(`Approved by: ${Array.from(approvedBy).join(", ")}`);

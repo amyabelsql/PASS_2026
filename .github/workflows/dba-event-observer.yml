@@ -1,0 +1,67 @@
+name: DBA Event Observer
+
+on:
+  workflow_dispatch:
+    inputs:
+      ticket:
+        description: Change or incident ticket
+        required: true
+        default: DBA-DEMO-001
+      environment:
+        description: Target environment
+        required: true
+        type: choice
+        options:
+          - dev
+          - qa
+          - prod
+        default: dev
+  repository_dispatch:
+    types:
+      - dba-change-request
+
+jobs:
+  observe-event:
+    name: Observe event metadata
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Show workflow, runner, and actor
+        run: |
+          echo "event_name=${{ github.event_name }}"
+          echo "actor=${{ github.actor }}"
+          echo "ref=${{ github.ref }}"
+          echo "runner_os=${{ runner.os }}"
+          echo "runner_arch=${{ runner.arch }}"
+
+      - name: Show ticket payload
+        env:
+          TICKET: ${{ github.event.client_payload.ticket || github.event.inputs.ticket || 'N/A' }}
+          TARGET_ENV: ${{ github.event.client_payload.environment || github.event.inputs.environment || 'dev' }}
+        run: |
+          echo "ticket=${TICKET}"
+          echo "environment=${TARGET_ENV}"
+
+      - name: Demonstrate safe secret usage
+        env:
+          DEMO_WEBHOOK_SHARED_SECRET: ${{ secrets.DEMO_WEBHOOK_SHARED_SECRET }}
+        run: |
+          if [[ -n "${DEMO_WEBHOOK_SHARED_SECRET}" ]]; then
+            echo "DEMO_WEBHOOK_SHARED_SECRET is configured."
+          else
+            echo "DEMO_WEBHOOK_SHARED_SECRET is not configured yet."
+          fi
+
+      - name: Save event payload
+        run: |
+          echo '${{ toJson(github.event) }}' > event-payload.json
+
+      - name: Upload event payload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dba-event-payload
+          path: event-payload.json

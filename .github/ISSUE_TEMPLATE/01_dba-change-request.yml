@@ -1,0 +1,71 @@
+name: DBA change request
+description: Request a schema, procedure, or data change with reliability controls.
+title: "[DBA Change] "
+labels:
+  - dba-change
+  - needs-triage
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for planned database changes.
+        Keep the summary short, and include a clear rollback plan.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Change summary
+      description: What exactly is changing?
+      placeholder: Example: Add CustomerName join to dbo.usp_GetCustomerOrders.
+    validations:
+      required: true
+  - type: dropdown
+    id: change_type
+    attributes:
+      label: Change type
+      options:
+        - Stored procedure logic
+        - Schema change
+        - Data migration
+        - Indexing or performance tuning
+        - Permissions or security
+    validations:
+      required: true
+  - type: dropdown
+    id: risk
+    attributes:
+      label: Risk level
+      options:
+        - Low
+        - Medium
+        - High
+    validations:
+      required: true
+  - type: input
+    id: deployment_window
+    attributes:
+      label: Deployment window (UTC)
+      description: Planned start and duration.
+      placeholder: "2026-11-15 01:00-01:30 UTC"
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation plan
+      description: Which checks prove this is safe?
+      placeholder: before.sql, after.sql, validate.sql, plus PR workflow links.
+    validations:
+      required: true
+  - type: textarea
+    id: rollback
+    attributes:
+      label: Rollback plan
+      description: What command/script restores prior behavior?
+      placeholder: Re-run previous proc definition script and restore backup if needed.
+    validations:
+      required: true
+  - type: textarea
+    id: copilot
+    attributes:
+      label: Copilot prompt and edits (optional)
+      description: If Copilot helped, capture the prompt and what you manually adjusted.

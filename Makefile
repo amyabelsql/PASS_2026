@@ -16,7 +16,7 @@ export CONTAINER PORT SA_USERNAME SA_PASSWORD DB_NAME IMAGE APP_PORT
 
 DOCKER_DIR := 01_Docker/Mac
 
-.PHONY: check install start setup dev test stop remove
+.PHONY: check install start setup dev test stop remove summit-guardrails summit-demo-order
 
 check:
 	bash $(DOCKER_DIR)/01-Check-Prerequisites.sh
@@ -41,3 +41,13 @@ stop:
 
 remove:
 	bash $(DOCKER_DIR)/06-Remove-Docker.sh
+
+summit-guardrails:
+	bash 05_PASS_Summit_Demos/scripts/sql_guardrails.sh 02_Database/changes/*.sql
+
+summit-demo-order:
+	@echo "1) 05_PASS_Summit_Demos/01_Templates_And_Approval_Process.md"
+	@echo "2) 05_PASS_Summit_Demos/02_Approvals_And_Automation.md"
+	@echo "3) 05_PASS_Summit_Demos/03_Webhooks_And_GitHub_Actions.md"
+	@echo "4) 05_PASS_Summit_Demos/04_Documentation.md"
+	@echo "5) 05_PASS_Summit_Demos/05_Tips_And_Tricks.md"

@@ -1,0 +1,46 @@
+name: DBA incident report
+description: Track a production incident with impact, timeline, and mitigation.
+title: "[DBA Incident] "
+labels:
+  - dba-incident
+  - production
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use this form for active or post-incident documentation.
+  - type: input
+    id: start_time
+    attributes:
+      label: Incident start time (UTC)
+      placeholder: "2026-11-21 14:06 UTC"
+    validations:
+      required: true
+  - type: textarea
+    id: impact
+    attributes:
+      label: Customer impact
+      placeholder: Query latency > 10s for Order APIs in prod-west.
+    validations:
+      required: true
+  - type: textarea
+    id: suspected_cause
+    attributes:
+      label: Suspected root cause
+      placeholder: Missing filtered index after release 2026.11.21.1
+    validations:
+      required: true
+  - type: textarea
+    id: mitigation
+    attributes:
+      label: Mitigation taken
+      placeholder: Reverted proc, rebuilt index, and drained writes for 5 minutes.
+    validations:
+      required: true
+  - type: textarea
+    id: prevention
+    attributes:
+      label: Prevention action
+      description: What automation or process change prevents recurrence?
+    validations:
+      required: true

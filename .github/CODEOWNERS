@@ -1,0 +1,12 @@
+# Default ownership.
+* @amyabelsql
+
+# Database behavior and validation.
+02_Database/ @amyabelsql
+03_Tests/ @amyabelsql
+04_Run/ @amyabelsql
+
+# Governance automation and demo scripts.
+.github/workflows/ @amyabelsql
+.pre-commit-config.yaml @amyabelsql
+05_PASS_Summit_Demos/scripts/ @amyabelsql

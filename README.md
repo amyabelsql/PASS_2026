@@ -10,6 +10,7 @@ Start with the markdown guides in [`00_Guides/`](00_Guides/README.md), then move
 | 1 | Automatically testing AI-generated database changes | [`00_Guides/01_Automatic-AI-Validation.md`](00_Guides/01_Automatic-AI-Validation.md) |
 | 2 | What happens when secrets get committed, why that is dangerous, and how to reproduce it safely | [`00_Guides/02_Secret-Leak-Impact.md`](00_Guides/02_Secret-Leak-Impact.md) |
 | 3 | Preventing password and secret leaks | [`00_Guides/03_Secret-Prevention.md`](00_Guides/03_Secret-Prevention.md) |
+| 4 | PASS Summit DBA governance demos (templates, approvals, actions, docs, tips) | [`05_PASS_Summit_Demos/README.md`](05_PASS_Summit_Demos/README.md) |
 
 ## Repo layout
 
@@ -18,6 +19,7 @@ Start with the markdown guides in [`00_Guides/`](00_Guides/README.md), then move
 - `02_Database/` — schema, seed data, stored procedure, and AI change scripts
 - `03_Tests/` — before/after/validation SQL checks
 - `04_Run/` — main script to run the SQL validation flow
+- `05_PASS_Summit_Demos/` — reproducible GitHub governance demos for DBAs
 - `.github/workflows/` — pull request and secret scanning automation
 
 ## Prerequisites
