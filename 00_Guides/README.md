@@ -1,34 +1,29 @@
-# Start Here
+# 00_Guides
 
-This repo is meant to be followed in order.
+## Primary guide
 
-## Reading order
+Start with:
+
+- [`PASS_Summit_Demo_Order.md`](PASS_Summit_Demo_Order.md)
+
+## Core SQL reliability guides (existing track)
 
 1. [`01_Automatic-AI-Validation.md`](01_Automatic-AI-Validation.md)
 2. [`02_Secret-Leak-Impact.md`](02_Secret-Leak-Impact.md)
 3. [`03_Secret-Prevention.md`](03_Secret-Prevention.md)
-4. [`../05_PASS_Summit_Demos/README.md`](../05_PASS_Summit_Demos/README.md)
 
-## Repo order
+## PASS Summit governance track (new structure)
 
-1. `00_Guides/` — presentation and walkthrough markdown files
-2. `01_Docker/` — start SQL Server and local environment scripts
-3. `02_Database/` — schema, seed data, stored procedure, and change scripts
-4. `03_Tests/` — SQL checks used before and after the AI-generated change
-5. `04_Run/` — script that runs the end-to-end validation demo
-6. `05_PASS_Summit_Demos/` — PASS Summit governance demos for DBAs
+1. [`../01_Templates/README.md`](../01_Templates/README.md)
+2. [`../02_Approval_Process/README.md`](../02_Approval_Process/README.md)
+3. [`../03_Approvals/README.md`](../03_Approvals/README.md)
+4. [`../04_Automation/README.md`](../04_Automation/README.md)
+5. [`../05_Webhooks/README.md`](../05_Webhooks/README.md)
+6. [`../06_Actions/README.md`](../06_Actions/README.md)
+7. [`../07_Documentation/README.md`](../07_Documentation/README.md)
+8. [`../08_Tips_and_Tricks/README.md`](../08_Tips_and_Tricks/README.md)
 
-## Quick setup
+## Webinar track
 
-1. Copy `.env.example` to `.env`
-2. Set `SA_PASSWORD`
-3. Run `pre-commit install`
-4. Add the GitHub Actions secret `SQL_SA_PASSWORD`
-
-## Quick run
-
-1. Start SQL Server
-   - macOS: `bash 01_Docker/Mac/03-Start-SQL-Server.sh`
-   - Windows: `pwsh -File 01_Docker/Windows/02-Start-Docker.ps1`
-2. Wait for SQL Server: `bash 01_Docker/01_wait-for-sqlserver.sh`
-3. Run the demo: `./04_Run/run-tests.sh`
+1. [`../Webinar/00_Guide/README.md`](../Webinar/00_Guide/README.md)
+2. [`../Webinar/01_Secrets/README.md`](../Webinar/01_Secrets/README.md)

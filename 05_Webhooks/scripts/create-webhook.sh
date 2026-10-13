@@ -4,10 +4,10 @@ set -euo pipefail
 if (($# < 2 || $# > 3)); then
   cat <<'EOF'
 Usage:
-  WEBHOOK_SECRET=... bash 05_PASS_Summit_Demos/scripts/create-webhook.sh <owner/repo> <https://listener.example.com/github> [event1,event2,...]
+  WEBHOOK_SECRET=... bash 05_Webhooks/scripts/create-webhook.sh <owner/repo> <https://listener.example.com/github> [event1,event2,...]
 
 Example:
-  WEBHOOK_SECRET=demo123 bash 05_PASS_Summit_Demos/scripts/create-webhook.sh amyabelsql/PASS_2026 https://webhook.site/your-id pull_request,issues
+  WEBHOOK_SECRET=demo123 bash 05_Webhooks/scripts/create-webhook.sh amyabelsql/PASS_2026 https://webhook.site/your-id pull_request,issues
 EOF
   exit 1
 fi

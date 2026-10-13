@@ -10,7 +10,8 @@ Start with the markdown guides in [`00_Guides/`](00_Guides/README.md), then move
 | 1 | Automatically testing AI-generated database changes | [`00_Guides/01_Automatic-AI-Validation.md`](00_Guides/01_Automatic-AI-Validation.md) |
 | 2 | What happens when secrets get committed, why that is dangerous, and how to reproduce it safely | [`00_Guides/02_Secret-Leak-Impact.md`](00_Guides/02_Secret-Leak-Impact.md) |
 | 3 | Preventing password and secret leaks | [`00_Guides/03_Secret-Prevention.md`](00_Guides/03_Secret-Prevention.md) |
-| 4 | PASS Summit DBA governance demos (templates, approvals, actions, docs, tips) | [`05_PASS_Summit_Demos/README.md`](05_PASS_Summit_Demos/README.md) |
+| 4 | PASS Summit governance demo order | [`00_Guides/PASS_Summit_Demo_Order.md`](00_Guides/PASS_Summit_Demo_Order.md) |
+| 5 | Webinar quick path | [`Webinar/00_Guide/README.md`](Webinar/00_Guide/README.md) |
 
 ## Repo layout
 
@@ -19,7 +20,15 @@ Start with the markdown guides in [`00_Guides/`](00_Guides/README.md), then move
 - `02_Database/` — schema, seed data, stored procedure, and AI change scripts
 - `03_Tests/` — before/after/validation SQL checks
 - `04_Run/` — main script to run the SQL validation flow
-- `05_PASS_Summit_Demos/` — reproducible GitHub governance demos for DBAs
+- `01_Templates/` — repository templates, issue templates/forms, and project board setup
+- `02_Approval_Process/` — DBA approval process definition
+- `03_Approvals/` — approval policy and enforcement guidance
+- `04_Automation/` — guardrails, pre-commit, Copilot prompts, CI automation
+- `05_Webhooks/` — webhook setup and external integration demo
+- `06_Actions/` — GitHub Actions workflow/runners/secrets demo
+- `07_Documentation/` — wiki, Mermaid, and gist documentation assets
+- `08_Tips_and_Tricks/` — presenter and operator shortcuts
+- `Webinar/` — webinar-focused quick track (`00_Guide`, `01_Secrets`)
 - `.github/workflows/` — pull request and secret scanning automation
 
 ## Prerequisites

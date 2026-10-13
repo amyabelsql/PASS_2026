@@ -4,10 +4,10 @@ set -euo pipefail
 if (($# < 2 || $# > 3)); then
   cat <<'EOF'
 Usage:
-  bash 05_PASS_Summit_Demos/scripts/create-repo-from-template.sh <template-owner/repo> <new-owner/repo> [public|private|internal]
+  bash 01_Templates/scripts/create-repo-from-template.sh <template-owner/repo> <new-owner/repo> [public|private|internal]
 
 Example:
-  bash 05_PASS_Summit_Demos/scripts/create-repo-from-template.sh amyabelsql/PASS_2026 amyabelsql/pass-dba-demo private
+  bash 01_Templates/scripts/create-repo-from-template.sh amyabelsql/PASS_2026 amyabelsql/pass-dba-demo private
 EOF
   exit 1
 fi

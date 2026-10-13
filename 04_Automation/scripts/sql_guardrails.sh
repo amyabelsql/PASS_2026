@@ -4,7 +4,7 @@ set -euo pipefail
 usage() {
   cat <<'EOF'
 Usage:
-  bash 05_PASS_Summit_Demos/scripts/sql_guardrails.sh [sql_file ...]
+  bash 04_Automation/scripts/sql_guardrails.sh [sql_file ...]
 
 Behavior:
   - With file arguments: validates only those SQL files.

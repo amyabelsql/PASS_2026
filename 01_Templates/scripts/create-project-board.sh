@@ -4,10 +4,10 @@ set -euo pipefail
 if (($# != 2)); then
   cat <<'EOF'
 Usage:
-  bash 05_PASS_Summit_Demos/scripts/create-project-board.sh <owner> "<project title>"
+  bash 01_Templates/scripts/create-project-board.sh <owner> "<project title>"
 
 Example:
-  bash 05_PASS_Summit_Demos/scripts/create-project-board.sh amyabelsql "DBA Change Control"
+  bash 01_Templates/scripts/create-project-board.sh amyabelsql "DBA Change Control"
 EOF
   exit 1
 fi

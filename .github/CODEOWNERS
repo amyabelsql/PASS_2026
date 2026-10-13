@@ -9,4 +9,7 @@
 # Governance automation and demo scripts.
 .github/workflows/ @amyabelsql
 .pre-commit-config.yaml @amyabelsql
-05_PASS_Summit_Demos/scripts/ @amyabelsql
+01_Templates/scripts/ @amyabelsql
+04_Automation/scripts/ @amyabelsql
+05_Webhooks/scripts/ @amyabelsql
+06_Actions/scripts/ @amyabelsql

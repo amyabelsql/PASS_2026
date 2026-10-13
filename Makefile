@@ -43,11 +43,17 @@ remove:
 	bash $(DOCKER_DIR)/06-Remove-Docker.sh
 
 summit-guardrails:
-	bash 05_PASS_Summit_Demos/scripts/sql_guardrails.sh 02_Database/changes/*.sql
+	bash 04_Automation/scripts/sql_guardrails.sh 02_Database/changes/*.sql
 
 summit-demo-order:
-	@echo "1) 05_PASS_Summit_Demos/01_Templates_And_Approval_Process.md"
-	@echo "2) 05_PASS_Summit_Demos/02_Approvals_And_Automation.md"
-	@echo "3) 05_PASS_Summit_Demos/03_Webhooks_And_GitHub_Actions.md"
-	@echo "4) 05_PASS_Summit_Demos/04_Documentation.md"
-	@echo "5) 05_PASS_Summit_Demos/05_Tips_And_Tricks.md"
+	@echo "00_Guides"
+	@echo "01_Templates"
+	@echo "02_Approval_Process"
+	@echo "03_Approvals"
+	@echo "04_Automation"
+	@echo "05_Webhooks"
+	@echo "06_Actions"
+	@echo "07_Documentation"
+	@echo "08_Tips_and_Tricks"
+	@echo "Webinar/00_Guide"
+	@echo "Webinar/01_Secrets"

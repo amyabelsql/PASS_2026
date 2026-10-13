@@ -4,10 +4,10 @@ set -euo pipefail
 if (($# != 3)); then
   cat <<'EOF'
 Usage:
-  bash 05_PASS_Summit_Demos/scripts/send-repository-dispatch.sh <owner/repo> <ticket-id> <environment>
+  bash 06_Actions/scripts/send-repository-dispatch.sh <owner/repo> <ticket-id> <environment>
 
 Example:
-  bash 05_PASS_Summit_Demos/scripts/send-repository-dispatch.sh amyabelsql/PASS_2026 DBA-447 prod
+  bash 06_Actions/scripts/send-repository-dispatch.sh amyabelsql/PASS_2026 DBA-447 prod
 EOF
   exit 1
 fi

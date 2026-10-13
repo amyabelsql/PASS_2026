@@ -15,7 +15,7 @@ body:
     attributes:
       label: Change summary
       description: What exactly is changing?
-      placeholder: Example: Add CustomerName join to dbo.usp_GetCustomerOrders.
+      placeholder: "Example: Add CustomerName join to dbo.usp_GetCustomerOrders."
     validations:
       required: true
   - type: dropdown
@@ -53,7 +53,7 @@ body:
     attributes:
       label: Validation plan
       description: Which checks prove this is safe?
-      placeholder: before.sql, after.sql, validate.sql, plus PR workflow links.
+      placeholder: "before.sql, after.sql, validate.sql, plus PR workflow links."
     validations:
       required: true
   - type: textarea
@@ -61,7 +61,7 @@ body:
     attributes:
       label: Rollback plan
       description: What command/script restores prior behavior?
-      placeholder: Re-run previous proc definition script and restore backup if needed.
+      placeholder: "Re-run previous proc definition script and restore backup if needed."
     validations:
       required: true
   - type: textarea
