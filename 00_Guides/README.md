@@ -14,14 +14,13 @@ Start with:
 
 ## PASS Summit governance track (new structure)
 
-1. [`../01_Templates/README.md`](../01_Templates/README.md)
+1. [`../01_Templates/00_Overview.md`](../01_Templates/00_Overview.md)
 2. [`../02_Approval_Process/README.md`](../02_Approval_Process/README.md)
-3. [`../03_Approvals/README.md`](../03_Approvals/README.md)
-4. [`../04_Automation/README.md`](../04_Automation/README.md)
-5. [`../05_Webhooks/README.md`](../05_Webhooks/README.md)
-6. [`../06_Actions/README.md`](../06_Actions/README.md)
-7. [`../07_Documentation/README.md`](../07_Documentation/README.md)
-8. [`../08_Tips_and_Tricks/README.md`](../08_Tips_and_Tricks/README.md)
+3. [`../04_Automation/README.md`](../04_Automation/README.md)
+4. [`../05_Webhooks/README.md`](../05_Webhooks/README.md)
+5. [`../06_Actions/README.md`](../06_Actions/README.md)
+6. [`../07_Documentation/README.md`](../07_Documentation/README.md)
+7. [`../08_Tips_and_Tricks/README.md`](../08_Tips_and_Tricks/README.md)
 
 ## Webinar track
 

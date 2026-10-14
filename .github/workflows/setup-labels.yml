@@ -1,0 +1,26 @@
+name: Set up DBA labels
+
+# Labels are not copied when you create a repo from a template.
+# Run this once from the Actions tab of your new repo.
+on:
+  workflow_dispatch:
+
+permissions:
+  issues: write
+
+jobs:
+  labels:
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ github.token }}
+      GH_REPO: ${{ github.repository }}
+    steps:
+      - name: Create labels
+        run: |
+          gh label create dba-change      --force --color 1D76DB --description "Planned database change"
+          gh label create index-change    --force --color 5319E7 --description "Index create, drop, or rebuild"
+          gh label create dba-incident    --force --color B60205 --description "Production database incident"
+          gh label create production      --force --color D93F0B --description "Affects production"
+          gh label create dba-maintenance --force --color 0E8A16 --description "Recurring maintenance task"
+          gh label create needs-triage    --force --color FBCA04 --description "Not reviewed by a DBA yet"
+          gh label create dba-approved    --force --color 0E8A16 --description "Approved by a DBA"

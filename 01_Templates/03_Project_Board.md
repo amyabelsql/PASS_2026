@@ -1,42 +1,45 @@
 # Project Board
 
-## What
+## Overview
 
-A project board gives DBAs one operational view for change intake, approval status, scheduling, and deployment readiness.
+A GitHub Project is a board or table that pulls issues and pull requests from many repos into one view. The DBA Change Control board tracks every change request from intake to done.
 
-## Why
+| Status | Meaning |
+| --- | --- |
+| Intake | Not reviewed yet |
+| Needs Evidence | Missing validation or rollback plan |
+| Ready for Approval | Waiting on a DBA reviewer |
+| Approved | Approved by a DBA |
+| Scheduled | Booked into a deployment window |
+| Done | Deployed and verified |
 
-Without a board, requests are scattered across issues/PRs and priorities become unclear during release windows.
+It also has Risk, Environment, and Rollback Ready fields.
 
-## How (GitHub UI first)
+## Value for DBAs
 
-1. In GitHub, go to **Projects** (user or org level).
-2. Click **New project**.
-3. Name it (example: `DBA Change Control`).
-4. Add fields:
-   - **Status** (Intake, Review, Approved, Scheduled, Deployed)
-   - **Risk** (Low, Medium, High)
-   - **Environment** (Dev, QA, Prod)
-   - **Rollback Ready** (Yes/No)
-5. Add views:
-   - Incoming Requests
-   - Ready for Approval
-   - Scheduled This Week
-   - Post-Deploy Verification
-6. Add issues from the DBA issue forms into this board.
+- One view of every change across every repo
+- See high risk work and missing rollback plans at a glance
+- Run the change meeting from one screen
 
-## Optional accelerator
+## What it does and does not do
 
-Create a project quickly with:
+| Does | Does not |
+| --- | --- |
+| Shows issues and pull requests from many repos | Store the issues, which stay in their repos |
+| Updates when an issue is closed or changed | Get copied when you create a repo from a template |
+| Adds new issues automatically with Auto add | Enforce approvals, which happen in pull requests |
+| Saves filtered views such as High Risk | Create views from the command line |
 
-```bash
-bash 01_Templates/scripts/create-project-board.sh <owner> "DBA Change Control"
-```
+## How to create it
 
-## Best practices for DBAs
+1. Click your profile picture, then Your projects, then New project.
+2. Choose Board and name it `DBA Change Control`.
+3. Rename the columns to the Status values above. Use the column menu to rename and the plus sign to add.
+4. Open the three dots at the top right, then Settings, and add the Risk, Environment, and Rollback Ready fields as single select fields.
+5. From the same menu open Workflows, turn on Auto add to project, and pick your repo.
 
-1. Keep **Status** values aligned with your approval workflow.
-2. Add automation so new `dba-change` issues are added to the board automatically.
-3. Track high-risk items with explicit SLA/owner fields.
-4. Keep one view specifically for “waiting on rollback plan.”
-5. Review board aging weekly to prevent stuck change requests.
+## How to use it
+
+1. Open the [DBA Change Control](https://github.com/users/amyabelsql/projects) board.
+2. To get your own copy, click the three dots at the top right and choose Make a copy.
+3. Move issues between columns as they progress, and set Risk and Rollback Ready on each one.

@@ -25,6 +25,7 @@ jobs:
       pull-requests: read
     outputs:
       has_sql_changes: ${{ steps.changed.outputs.has_sql_changes }}
+      has_index_changes: ${{ steps.changed.outputs.has_index_changes }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
@@ -41,11 +42,21 @@ jobs:
 
           if ((${#changed_sql[@]} == 0)); then
             echo "has_sql_changes=false" >> "$GITHUB_OUTPUT"
+            echo "has_index_changes=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
 
           printf '%s\0' "${changed_sql[@]}" > changed-sql-files.txt
           echo "has_sql_changes=true" >> "$GITHUB_OUTPUT"
+
+          has_index_changes=false
+          for sql_file in "${changed_sql[@]}"; do
+            if grep -Eiq '\b(create|drop)[[:space:]]+(nonclustered|clustered)?[[:space:]]*index\b|\balter[[:space:]]+index\b' "${sql_file}"; then
+              has_index_changes=true
+              break
+            fi
+          done
+          echo "has_index_changes=${has_index_changes}" >> "$GITHUB_OUTPUT"
 
       - name: Run SQL guardrail checks
         if: steps.changed.outputs.has_sql_changes == 'true'
@@ -63,13 +74,38 @@ jobs:
       pull-requests: read
     steps:
       - name: Require label and non-author approval
+        env:
+          HAS_INDEX_CHANGES: ${{ needs.sql-guardrails.outputs.has_index_changes }}
         uses: actions/github-script@v8
         with:
           script: |
             const pr = context.payload.pull_request;
             const labels = pr.labels.map((label) => label.name.toLowerCase());
+            const body = pr.body || "";
+            const failures = [];
+
             if (!labels.includes("dba-approved")) {
-              core.setFailed('SQL change requests require the "dba-approved" label.');
+              failures.push('SQL change requests require the "dba-approved" label.');
+            }
+
+            const hasIssueReference =
+              /\b(closes|close|fixes|fix|resolves|resolve)\s+#\d+\b/i.test(body) ||
+              /\B#\d+\b/.test(body);
+            if (!hasIssueReference) {
+              failures.push('PR description must include a linked issue reference (example: "Closes #123").');
+            }
+
+            const hasIndexChanges = process.env.HAS_INDEX_CHANGES === "true";
+            if (hasIndexChanges && !labels.includes("index-change")) {
+              failures.push('Index change PRs must include the "index-change" label.');
+            }
+
+            if (hasIndexChanges && !/index-change evidence/i.test(body)) {
+              failures.push('Index change PRs must include the "Index-change evidence" section in the PR body.');
+            }
+
+            if (failures.length > 0) {
+              core.setFailed(failures.join("\n"));
               return;
             }
 

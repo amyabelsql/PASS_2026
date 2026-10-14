@@ -11,7 +11,7 @@ This section automates quality checks so bad SQL patterns are blocked quickly an
 
 ### Why it matters
 
-It blocks high-risk SQL patterns before merge.
+It blocks high-risk SQL patterns before merge and enforces issue-linked approvals.
 
 ### How to use it
 

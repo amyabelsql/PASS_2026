@@ -1,5 +1,5 @@
 name: DBA change request
-description: Request a schema, procedure, or data change with reliability controls.
+description: Request a schema, procedure, or data change with a validation and rollback plan.
 title: "[DBA Change] "
 labels:
   - dba-change
@@ -8,14 +8,13 @@ body:
   - type: markdown
     attributes:
       value: |
-        Use this form for planned database changes.
-        Keep the summary short, and include a clear rollback plan.
+        Use this form for planned database changes. Every required field must be filled in before the request can be submitted.
   - type: textarea
     id: summary
     attributes:
       label: Change summary
-      description: What exactly is changing?
-      placeholder: "Example: Add CustomerName join to dbo.usp_GetCustomerOrders."
+      description: What is changing, and why?
+      placeholder: Add CustomerName to the result set of dbo.usp_GetCustomerOrders so the app stops making a second call per order.
     validations:
       required: true
   - type: dropdown
@@ -28,6 +27,16 @@ body:
         - Data migration
         - Indexing or performance tuning
         - Permissions or security
+    validations:
+      required: true
+  - type: dropdown
+    id: environment
+    attributes:
+      label: Target environment
+      options:
+        - Dev
+        - QA
+        - Prod
     validations:
       required: true
   - type: dropdown
@@ -44,28 +53,28 @@ body:
     id: deployment_window
     attributes:
       label: Deployment window (UTC)
-      description: Planned start and duration.
-      placeholder: "2026-11-15 01:00-01:30 UTC"
+      description: Planned start time and duration.
+      placeholder: "2026-11-15 01:00 UTC for 30 minutes"
     validations:
       required: true
   - type: textarea
     id: validation
     attributes:
       label: Validation plan
-      description: Which checks prove this is safe?
-      placeholder: "before.sql, after.sql, validate.sql, plus PR workflow links."
+      description: Which checks prove the change is safe?
+      placeholder: Run before.sql, after.sql, and validate.sql, then link the pull request workflow results.
     validations:
       required: true
   - type: textarea
     id: rollback
     attributes:
       label: Rollback plan
-      description: What command/script restores prior behavior?
-      placeholder: "Re-run previous proc definition script and restore backup if needed."
+      description: The exact script or command that restores the previous behavior.
+      placeholder: Re-run the previous procedure definition from the last release tag.
     validations:
       required: true
   - type: textarea
     id: copilot
     attributes:
-      label: Copilot prompt and edits (optional)
-      description: If Copilot helped, capture the prompt and what you manually adjusted.
+      label: Copilot prompt and manual edits (optional)
+      description: If Copilot helped write the change, paste the prompt and describe what you changed by hand.

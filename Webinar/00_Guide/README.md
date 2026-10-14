@@ -13,5 +13,5 @@ Use this as the webinar opening sequence.
 ## Fast links
 
 - [`../../00_Guides/PASS_Summit_Demo_Order.md`](../../00_Guides/PASS_Summit_Demo_Order.md)
-- [`../../01_Templates/README.md`](../../01_Templates/README.md)
+- [`../../01_Templates/00_Overview.md`](../../01_Templates/00_Overview.md)
 - [`../../04_Automation/README.md`](../../04_Automation/README.md)

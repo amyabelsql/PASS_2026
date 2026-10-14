@@ -7,20 +7,22 @@ labels: ["dba-maintenance", "needs-triage"]
 
 ## Summary
 
-What recurring task is needed and why now?
+Describe the recurring task and why it is needed now.
 
 ## Scope
 
-- Environment:
-- Objects involved:
-- Change window:
+| Item | Details |
+| --- | --- |
+| Environment | |
+| Objects involved | |
+| Maintenance window | |
 
 ## Success criteria
 
-- [ ] Backup/restore path is documented
-- [ ] Query behavior baseline captured
+- [ ] Backup and restore path is documented
+- [ ] Baseline query performance is captured
 - [ ] Post-change validation query is attached
 
 ## Operational notes
 
-Add links to dashboards, alerts, or runbook references.
+Add links to dashboards, alerts, or runbooks.

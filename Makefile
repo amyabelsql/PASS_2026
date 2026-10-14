@@ -16,7 +16,8 @@ export CONTAINER PORT SA_USERNAME SA_PASSWORD DB_NAME IMAGE APP_PORT
 
 DOCKER_DIR := 01_Docker/Mac
 
-.PHONY: check install start setup dev test stop remove summit-guardrails summit-demo-order
+.PHONY: check install start setup dev test stop remove summit-guardrails summit-demo-order \
+        templates templates-demo templates-reset templates-teardown
 
 check:
 	bash $(DOCKER_DIR)/01-Check-Prerequisites.sh
@@ -49,7 +50,6 @@ summit-demo-order:
 	@echo "00_Guides"
 	@echo "01_Templates"
 	@echo "02_Approval_Process"
-	@echo "03_Approvals"
 	@echo "04_Automation"
 	@echo "05_Webhooks"
 	@echo "06_Actions"
@@ -57,3 +57,16 @@ summit-demo-order:
 	@echo "08_Tips_and_Tricks"
 	@echo "Webinar/00_Guide"
 	@echo "Webinar/01_Secrets"
+
+# Templates demo (01_Templates). See 01_Templates/README.md.
+templates:
+	bash 01_Templates/templates.sh build
+
+templates-demo:
+	bash 01_Templates/templates.sh demo
+
+templates-reset:
+	bash 01_Templates/templates.sh reset
+
+templates-teardown:
+	bash 01_Templates/templates.sh teardown

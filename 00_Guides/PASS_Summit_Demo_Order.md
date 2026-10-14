@@ -4,16 +4,12 @@ Use this exact structure:
 
 1. [`../00_Guides/`](../00_Guides/)
 2. [`../01_Templates/`](../01_Templates/)
-   - [`01_Repo_Template.md`](../01_Templates/01_Repo_Template.md)
-   - [`02_Issue_Templates.md`](../01_Templates/02_Issue_Templates.md)
-   - [`03_Project_Board.md`](../01_Templates/03_Project_Board.md)
 3. [`../02_Approval_Process/`](../02_Approval_Process/)
-4. [`../03_Approvals/`](../03_Approvals/)
-5. [`../04_Automation/`](../04_Automation/)
-6. [`../05_Webhooks/`](../05_Webhooks/)
-7. [`../06_Actions/`](../06_Actions/)
-8. [`../07_Documentation/`](../07_Documentation/)
-9. [`../08_Tips_and_Tricks/`](../08_Tips_and_Tricks/)
+4. [`../04_Automation/`](../04_Automation/)
+5. [`../05_Webhooks/`](../05_Webhooks/)
+6. [`../06_Actions/`](../06_Actions/)
+7. [`../07_Documentation/`](../07_Documentation/)
+8. [`../08_Tips_and_Tricks/`](../08_Tips_and_Tricks/)
 
 Webinar track:
 
