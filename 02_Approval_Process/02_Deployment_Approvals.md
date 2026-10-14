@@ -40,7 +40,7 @@ An environment is a named target such as production. When a workflow job uses an
 
 ## How to use it
 
-1. Merge a pull request that adds a file to `02_Database/changes/`.
+1. Merge a pull request that adds a file to `02_Database/changes/`. To test without a pull request, open Actions, click Deploy database change, and click Run workflow.
 2. Open Actions and click the Deploy database change run. It shows Waiting for review.
 3. The reviewer clicks Review deployments, checks production, adds a comment, and clicks Approve and deploy.
-4. The deploy job runs and the approval shows on the run summary.
+4. The deploy job runs. The reviewer's name and comment are saved on the run summary as the record of the approval.

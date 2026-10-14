@@ -179,8 +179,8 @@ Demo is ready.
   Environment    https://github.com/${DEMO_REPO}/settings/environments
 
 Optional chat setup, run once in the channel you will show
-  Slack   /github subscribe ${DEMO_REPO} reviews workflows:{name:"Deploy database change" event:"push" branch:"main"}
-  Teams   @GitHub subscribe ${DEMO_REPO} reviews workflows:{name:"Deploy database change" event:"push" branch:"main"}
+  Slack   /github subscribe ${DEMO_REPO} reviews workflows:{event:"push","workflow_dispatch"}
+  Teams   @GitHub subscribe ${DEMO_REPO} reviews workflows:{event:"push","workflow_dispatch"}
 EOF
 }
 

@@ -11,7 +11,19 @@ gh auth login
 gh auth refresh -s workflow,delete_repo
 ```
 
-Install the GitHub mobile app on your phone and turn on push notifications for deployment reviews. If you want to show Slack or Teams, install the GitHub app there and use the subscribe commands that `make approvals-demo` prints.
+Install the GitHub mobile app on your phone and turn on push notifications for deployment reviews.
+
+## Slack or Teams before every session
+
+`make approvals-demo` creates a brand new repo each time, so the chat subscription has to be set up again after every build.
+
+1. Run `make approvals-demo`.
+2. Go to [github.com/settings/installations](https://github.com/settings/installations), click Configure next to Slack or Teams, and make sure `pass-dba-approvals` has access. If the app is set to only selected repositories, add it.
+3. In your approvals channel, run the subscribe command that `make approvals-demo` printed.
+4. Run `/github subscribe list features` and check that `pass-dba-approvals` is listed with `workflows`.
+5. Start a test run from Actions with Run workflow and approve it from the thread so you know it works before you go on stage.
+
+Follow [04_Slack_and_Teams.md](04_Slack_and_Teams.md) for the first time setup and the table of fixes.
 
 ## Commands
 
@@ -26,7 +38,7 @@ Install the GitHub mobile app on your phone and turn on push notifications for d
 2. Show Files changed so the audience sees the index SQL and the linked issue.
 3. Merge it with the bypass checkbox. As the only person in the repo you cannot approve your own pull request, so explain that a second DBA would approve here.
 4. Open Actions. Deploy database change is waiting for review.
-5. Approve it from the push notification on your phone, or from the Slack or Teams message.
+5. Approve it from the push notification on your phone, or from the thread under the Slack or Teams message.
 6. Show the deploy job finishing and the approval on the run summary.
 7. Open the issue to show it closed itself when the pull request merged.
 
