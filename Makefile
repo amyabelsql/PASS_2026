@@ -51,6 +51,7 @@ summit-demo-order:
 	@echo "00_Guides"
 	@echo "01_Templates"
 	@echo "02_Approval_Process"
+	@echo "03_AI_with_Copilot"
 	@echo "04_Automation"
 	@echo "05_Webhooks"
 	@echo "06_Actions"
