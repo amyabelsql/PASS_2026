@@ -21,7 +21,7 @@ Start with the markdown guides in [`00_Guides/`](00_Guides/README.md), then move
 - `03_Tests/` — before/after/validation SQL checks
 - `04_Run/` — main script to run the SQL validation flow
 - `01_Templates/` — repository templates, issue templates/forms, and project board setup
-- `02_Approval_Process/` — combined approval process + approval demo controls (labels, examples, demo scripts)
+- `02_Approval_Process/` pull request and deployment approvals, mobile, Slack, Teams, and change records
 - `04_Automation/` — guardrails, pre-commit, Copilot prompts, CI automation
 - `05_Webhooks/` — webhook setup and external integration demo
 - `06_Actions/` — GitHub Actions workflow/runners/secrets demo

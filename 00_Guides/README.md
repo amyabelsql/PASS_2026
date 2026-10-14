@@ -15,7 +15,7 @@ Start with:
 ## PASS Summit governance track (new structure)
 
 1. [`../01_Templates/00_Overview.md`](../01_Templates/00_Overview.md)
-2. [`../02_Approval_Process/README.md`](../02_Approval_Process/README.md)
+2. [`../02_Approval_Process/00_Overview.md`](../02_Approval_Process/00_Overview.md)
 3. [`../04_Automation/README.md`](../04_Automation/README.md)
 4. [`../05_Webhooks/README.md`](../05_Webhooks/README.md)
 5. [`../06_Actions/README.md`](../06_Actions/README.md)

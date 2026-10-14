@@ -1,0 +1,47 @@
+name: Deploy database change
+
+# Runs when a SQL change is merged to main. The deploy job uses the production
+# environment, so it waits until a required reviewer approves it in GitHub,
+# GitHub Mobile, Slack, or Teams.
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "02_Database/changes/**.sql"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  plan:
+    name: Show the change
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Print the SQL that will run
+        run: |
+          for file in 02_Database/changes/*.sql; do
+            echo "----- ${file}"
+            cat "${file}"
+          done
+
+  deploy:
+    name: Deploy to production
+    needs: plan
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Deploy
+        # This demo only records the approval. In a real repo, replace this step with
+        # sqlcmd or your deployment tool, and keep the connection details in
+        # production environment secrets.
+        run: |
+          echo "Approved for production by a required reviewer."
+          echo "Commit ${GITHUB_SHA} would be deployed now."
