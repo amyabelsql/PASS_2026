@@ -17,7 +17,7 @@ Start with:
 1. [`../01_Templates/00_Overview.md`](../01_Templates/00_Overview.md)
 2. [`../02_Approval_Process/00_Overview.md`](../02_Approval_Process/00_Overview.md)
 3. [`../03_AI_with_Copilot/00_Overview.md`](../03_AI_with_Copilot/00_Overview.md)
-4. [`../04_Automation/README.md`](../04_Automation/README.md)
+4. [`../04_Automation/00_Overview.md`](../04_Automation/00_Overview.md)
 5. [`../05_Webhooks/README.md`](../05_Webhooks/README.md)
 6. [`../06_Actions/README.md`](../06_Actions/README.md)
 7. [`../07_Documentation/README.md`](../07_Documentation/README.md)

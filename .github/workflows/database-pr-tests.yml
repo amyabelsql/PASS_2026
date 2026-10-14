@@ -10,6 +10,16 @@ on:
       - "03_Tests/**"
       - "04_Run/**"
       - ".github/workflows/database-pr-tests.yml"
+  # Run it by hand to show a good change passing and a bad AI change failing.
+  workflow_dispatch:
+    inputs:
+      change:
+        description: Change script to test
+        type: choice
+        options:
+          - good
+          - bad
+        default: good
 
 jobs:
   database-tests:
@@ -17,6 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       SQL_SA_PASSWORD: ${{ secrets.SQL_SA_PASSWORD }}
+      CHANGE_SCRIPT: 02_Database/changes/004_ai_generated_${{ inputs.change || 'good' }}_change.sql
 
     services:
       sqlserver:
@@ -36,6 +47,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v6
 
+      - name: Check the SQL password secret
+        run: |
+          if [[ -z "${SQL_SA_PASSWORD}" ]]; then
+            echo "::error::Add a SQL_SA_PASSWORD repository secret. See 04_Automation/03_Database_Tests.md."
+            exit 1
+          fi
+
       - name: Install sqlcmd
         shell: bash
         run: |
@@ -44,8 +62,8 @@ jobs:
             echo "sqlcmd already installed."
             exit 0
           fi
-          curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-          curl -sSL https://packages.microsoft.com/config/ubuntu/22.04/prod.list | sudo tee /etc/apt/sources.list.d/microsoft-prod.list >/dev/null
+          curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo gpg --dearmor -o /usr/share/keyrings/microsoft-prod.gpg
+          echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-prod.gpg] https://packages.microsoft.com/ubuntu/$(lsb_release -rs)/prod $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/microsoft-prod.list >/dev/null
           sudo apt-get update
           sudo ACCEPT_EULA=Y apt-get install -y mssql-tools18 unixodbc-dev
           echo "/opt/mssql-tools18/bin" >> "${GITHUB_PATH}"
@@ -61,7 +79,7 @@ jobs:
           SQL_PASSWORD: ${{ env.SQL_SA_PASSWORD }}
         run: ./01_Docker/01_wait-for-sqlserver.sh
 
-      - name: Run database tests (good change)
+      - name: Run database tests
         env:
           SQL_SERVER: localhost
           SQL_PORT: 1433
@@ -76,27 +94,3 @@ jobs:
           name: database-test-results
           path: test-results/
           if-no-files-found: warn
-
-  # Optional demo job: intentionally run the bad AI-generated change
-  # Uncomment this job when you want to show CI failing on a bad change.
-  #
-  # database-tests-bad-change:
-  #   name: Run SQL validation tests (bad change)
-  #   runs-on: ubuntu-latest
-  #   services:
-  #     sqlserver:
-  #       image: mcr.microsoft.com/mssql/server:2022-latest
-  #       env:
-  #         ACCEPT_EULA: Y
-  #         MSSQL_SA_PASSWORD: ${{ secrets.SQL_SA_PASSWORD }}
-  #       ports:
-  #         - 1433:1433
-  #   steps:
-  #     - uses: actions/checkout@v6
-  #     - run: chmod +x 01_Docker/*.sh 04_Run/*.sh
-  #     - env:
-  #         SQL_PASSWORD: ${{ secrets.SQL_SA_PASSWORD }}
-  #       run: ./01_Docker/01_wait-for-sqlserver.sh
-  #     - env:
-  #         SQL_PASSWORD: ${{ secrets.SQL_SA_PASSWORD }}
-  #       run: CHANGE_SCRIPT=02_Database/changes/004_ai_generated_bad_change.sql ./04_Run/run-tests.sh

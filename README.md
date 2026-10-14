@@ -23,7 +23,7 @@ Start with the markdown guides in [`00_Guides/`](00_Guides/README.md), then move
 - `01_Templates/` — repository templates, issue templates/forms, and project board setup
 - `02_Approval_Process/` pull request and deployment approvals, mobile, Slack, Teams, and change records
 - `03_AI_with_Copilot/` GitHub Copilot on GitHub, in SSMS, in VS Code, in the terminal, and the guardrails around it
-- `04_Automation/` — guardrails, pre-commit, Copilot prompts, CI automation
+- `04_Automation/` SQL guardrails, pre-commit hooks, and database tests in GitHub Actions
 - `05_Webhooks/` — webhook setup and external integration demo
 - `06_Actions/` — GitHub Actions workflow/runners/secrets demo
 - `07_Documentation/` — wiki, Mermaid, and gist documentation assets

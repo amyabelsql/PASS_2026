@@ -9,7 +9,8 @@ GitHub Copilot is one AI assistant that follows a DBA from SSMS to the terminal 
 | [03_Copilot_in_VS_Code.md](03_Copilot_in_VS_Code.md) | VS Code with the MSSQL extension | Write SQL files for the repo and test them against a dev database |
 | [04_Copilot_CLI.md](04_Copilot_CLI.md) | Terminal | Run git, gh, and sqlcmd tasks by asking in plain English |
 | [05_Guardrails.md](05_Guardrails.md) | Everywhere | Teach Copilot your rules and keep a human in charge |
-| [06_Presenter_Commands.md](06_Presenter_Commands.md) | Demo | Hand an issue to Copilot live with `make ai-demo` |
+| [06_Prompt_Pack.md](06_Prompt_Pack.md) | Any Copilot chat | Tested prompts for common DBA tasks |
+| [07_Presenter_Commands.md](07_Presenter_Commands.md) | Demo | Hand an issue to Copilot live with `make ai-demo` |
 
 Copilot reviews and approvals for pull requests are covered in [02_Approval_Process/06_Copilot_Reviews.md](../02_Approval_Process/06_Copilot_Reviews.md).
 

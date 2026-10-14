@@ -15,6 +15,6 @@ repos:
     hooks:
       - id: dba-sql-guardrails
         name: dba-sql-guardrails
-        entry: bash 04_Automation/scripts/sql_guardrails.sh
+        entry: bash 04_Automation/sql_guardrails.sh
         language: system
         files: ^02_Database/changes/.*\.sql$

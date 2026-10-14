@@ -16,9 +16,10 @@ export CONTAINER PORT SA_USERNAME SA_PASSWORD DB_NAME IMAGE APP_PORT
 
 DOCKER_DIR := 01_Docker/Mac
 
-.PHONY: check install start setup dev test stop remove summit-guardrails summit-demo-order \
+.PHONY: check install start setup dev test stop remove summit-demo-order \
         templates templates-demo templates-reset templates-teardown \
-        approvals-demo approvals-reset ai-demo
+        approvals-demo approvals-reset ai-demo \
+        automation automation-demo automation-teardown
 
 check:
 	bash $(DOCKER_DIR)/01-Check-Prerequisites.sh
@@ -43,9 +44,6 @@ stop:
 
 remove:
 	bash $(DOCKER_DIR)/06-Remove-Docker.sh
-
-summit-guardrails:
-	bash 04_Automation/scripts/sql_guardrails.sh 02_Database/changes/*.sql
 
 summit-demo-order:
 	@echo "00_Guides"
@@ -80,6 +78,16 @@ approvals-demo:
 approvals-reset:
 	bash 02_Approval_Process/approvals.sh reset
 
-# AI demo (03_AI_with_Copilot). See 03_AI_with_Copilot/06_Presenter_Commands.md.
+# AI demo (03_AI_with_Copilot). See 03_AI_with_Copilot/07_Presenter_Commands.md.
 ai-demo:
 	bash 03_AI_with_Copilot/ai.sh demo
+
+# Automation demo (04_Automation). See 04_Automation/04_Presenter_Commands.md.
+automation:
+	bash 04_Automation/automation.sh build
+
+automation-demo:
+	bash 04_Automation/automation.sh demo
+
+automation-teardown:
+	bash 04_Automation/automation.sh teardown

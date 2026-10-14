@@ -8,7 +8,7 @@ Copilot is fast but it is not accountable for a production outage. You are. Guar
 | --- | --- | --- |
 | SQL review rules | [sql-review.instructions.md](../.github/instructions/sql-review.instructions.md) | Copilot code review and the cloud agent |
 | Database instructions | `AGENTS.md` and `CONSTITUTION.md` extended properties | Copilot in SSMS |
-| Prompt pack | [Copilot_Prompts_For_DBAs.md](../04_Automation/Copilot_Prompts_For_DBAs.md) | People writing prompts |
+| Prompt pack | [06_Prompt_Pack.md](06_Prompt_Pack.md) | People writing prompts |
 | SQL checks | [dba-approval-guardrails.yml](../.github/workflows/dba-approval-guardrails.yml) | Every pull request, AI or not |
 | Approvals | [02_Approval_Process](../02_Approval_Process/00_Overview.md) | Every merge and every production deploy |
 

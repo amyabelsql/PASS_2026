@@ -11,6 +11,7 @@
 .pre-commit-config.yaml @amyabelsql
 01_Templates/ @amyabelsql
 02_Approval_Process/ @amyabelsql
-04_Automation/scripts/ @amyabelsql
+04_Automation/ @amyabelsql
+03_AI_with_Copilot/ @amyabelsql
 05_Webhooks/scripts/ @amyabelsql
 06_Actions/scripts/ @amyabelsql
