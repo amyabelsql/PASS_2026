@@ -22,9 +22,7 @@ trap 'rm -rf "${WORK}"' EXIT
 check_tools() {
   command -v gh >/dev/null || { echo "Install the GitHub CLI with 'brew install gh'."; exit 1; }
   gh auth status >/dev/null 2>&1 || { echo "Run 'gh auth login' first."; exit 1; }
-  for scope in workflow delete_repo; do
-    gh auth status 2>&1 | grep -q "'${scope}'" || { echo "Run 'gh auth refresh -s workflow,delete_repo' first."; exit 1; }
-  done
+  gh auth status 2>&1 | grep -q "'workflow'" || { echo "Run 'gh auth refresh -s workflow' first."; exit 1; }
 }
 
 confirm() {
@@ -90,12 +88,13 @@ demo() {
     --description "PASS Summit demo of DBA approvals in GitHub" >/dev/null
   for _ in $(seq 1 15); do gh api "repos/${DEMO_REPO}/contents/README.md" >/dev/null 2>&1 && break; sleep 2; done
 
-  echo "Adding the deploy workflow, CODEOWNERS, issue form, and pull request template"
+  echo "Adding the deploy workflow, CODEOWNERS, issue form, pull request template, and Copilot review rules"
   printf '* @%s\n' "${OWNER}" > "${WORK}/CODEOWNERS"
   put_file .github/CODEOWNERS "${WORK}/CODEOWNERS" main "Add CODEOWNERS"
   put_file .github/workflows/dba-deploy-approval.yml "${ROOT}/.github/workflows/dba-deploy-approval.yml" main "Add deploy workflow"
   put_file .github/ISSUE_TEMPLATE/04_index-change-request.yml "${ROOT}/.github/ISSUE_TEMPLATE/04_index-change-request.yml" main "Add index change form"
   put_file .github/PULL_REQUEST_TEMPLATE.md "${ROOT}/.github/PULL_REQUEST_TEMPLATE.md" main "Add pull request template"
+  put_file .github/instructions/sql-review.instructions.md "${ROOT}/.github/instructions/sql-review.instructions.md" main "Add Copilot SQL review rules"
 
   echo "Adding labels, the production environment, and the main branch ruleset"
   add_labels >/dev/null
@@ -186,6 +185,7 @@ EOF
 
 reset() {
   [[ "${DEMO_REPO}" != "${OWNER}/PASS_2026" ]] || { echo "DEMO_REPO cannot be this repo."; exit 1; }
+  gh auth status 2>&1 | grep -q "'delete_repo'" || { echo "Run 'gh auth refresh -s delete_repo' first."; exit 1; }
   confirm "This deletes ${DEMO_REPO}."
   if gh repo view "${DEMO_REPO}" >/dev/null 2>&1; then
     gh repo delete "${DEMO_REPO}" --yes

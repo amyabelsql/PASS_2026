@@ -36,10 +36,11 @@ Follow [04_Slack_and_Teams.md](04_Slack_and_Teams.md) for the first time setup a
 
 1. Open the pull request. The merge box says a code owner review is required.
 2. Show Files changed so the audience sees the index SQL and the linked issue.
-3. Merge it with the bypass checkbox. As the only person in the repo you cannot approve your own pull request, so explain that a second DBA would approve here.
-4. Open Actions. Deploy database change is waiting for review.
-5. Approve it from the push notification on your phone, or from the thread under the Slack or Teams message.
-6. Show the deploy job finishing and the approval on the run summary.
-7. Open the issue to show it closed itself when the pull request merged.
+3. If you have Copilot, click the gear next to Reviewers and pick Copilot. Show the overview comment with the summary and the rollback check from the SQL review rules. Request it a few minutes before the session so the review is already there.
+4. Merge it with the bypass checkbox. As the only person in the repo you cannot approve your own pull request, so explain that a second DBA would approve here.
+5. Open Actions. Deploy database change is waiting for review.
+6. Approve it from the push notification on your phone, or from the thread under the Slack or Teams message.
+7. Show the deploy job finishing and the approval on the run summary.
+8. Open the issue to show it closed itself when the pull request merged.
 
 Run `make approvals-reset` and then `make approvals-demo` to run it again.

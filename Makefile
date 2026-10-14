@@ -72,7 +72,7 @@ templates-reset:
 templates-teardown:
 	bash 01_Templates/templates.sh teardown
 
-# Approvals demo (02_Approval_Process). See 02_Approval_Process/06_Presenter_Commands.md.
+# Approvals demo (02_Approval_Process). See 02_Approval_Process/07_Presenter_Commands.md.
 approvals-demo:
 	bash 02_Approval_Process/approvals.sh demo
 

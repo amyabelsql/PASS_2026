@@ -9,6 +9,7 @@ DBAs care most about approving schema and index changes before they reach produc
 | [03_Mobile_and_Email.md](03_Mobile_and_Email.md) | Approve from the GitHub mobile app and tune email |
 | [04_Slack_and_Teams.md](04_Slack_and_Teams.md) | Send approval requests to Slack or Teams |
 | [05_Change_Records.md](05_Change_Records.md) | Keep change records in GitHub, ServiceNow, or Jira |
-| [06_Presenter_Commands.md](06_Presenter_Commands.md) | Build and remove the demo with `approvals.sh` |
+| [06_Copilot_Reviews.md](06_Copilot_Reviews.md) | Let Copilot summarize, review, and approve low risk requests |
+| [07_Presenter_Commands.md](07_Presenter_Commands.md) | Build and remove the demo with `approvals.sh` |
 
 The demo uses the index change in [Demo_Index_Change.sql](Demo_Index_Change.sql) and the deploy workflow in [dba-deploy-approval.yml](../.github/workflows/dba-deploy-approval.yml).
