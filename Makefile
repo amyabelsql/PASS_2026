@@ -18,7 +18,7 @@ DOCKER_DIR := 01_Docker/Mac
 
 .PHONY: check install start setup dev test stop remove summit-guardrails summit-demo-order \
         templates templates-demo templates-reset templates-teardown \
-        approvals-demo approvals-reset
+        approvals-demo approvals-reset ai-demo
 
 check:
 	bash $(DOCKER_DIR)/01-Check-Prerequisites.sh
@@ -79,3 +79,7 @@ approvals-demo:
 
 approvals-reset:
 	bash 02_Approval_Process/approvals.sh reset
+
+# AI demo (03_AI_with_Copilot). See 03_AI_with_Copilot/06_Presenter_Commands.md.
+ai-demo:
+	bash 03_AI_with_Copilot/ai.sh demo
